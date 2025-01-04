@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= full_title(yield(:title)) %></title> <!-- Tên trang động -->
+  
+  <!-- Liên kết các tệp CSS -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "custom", "data-turbo-track": "reload" %> <!-- Nếu bạn có CSS custom -->
+  
+  <!-- Liên kết các tệp JavaScript -->
+  <%= javascript_importmap_tags "application", "data-turbo-track": "reload", type: "module" %>
+  
+  <%= csrf_meta_tags %> <!-- CSRF token để bảo vệ ứng dụng khỏi tấn công -->
+  
+</head>
+<body>
+  <!-- Phần header có thể là navbar -->
+  <header>
+    <nav>
+      <!-- Thêm các liên kết, logo vào đây -->
+    </nav>
+  </header>
+
+  <!-- Phần chính của trang web -->
+  <main>
+    <%= yield %> <!-- Đoạn mã này sẽ render nội dung từ các view cụ thể (ví dụ, trang chủ, trang sản phẩm, v.v.) -->
+  </main>
+
+  <!-- Phần footer có thể chứa thông tin bản quyền, liên kết khác -->
+  <footer>
+    <p>&copy; 2025 Công ty XYZ</p>
+  </footer>
+  
+  <!-- JavaScript bổ sung -->
+  <%= javascript_include_tag "custom" %> <!-- Nếu bạn có các JS riêng -->
+</body>
+</html>
