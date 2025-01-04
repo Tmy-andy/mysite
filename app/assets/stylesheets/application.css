@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Stylesheets -->
+    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "custom" %> <!-- Không sử dụng data-turbo-track nếu không hỗ trợ -->
+
+    <!-- JavaScript -->
+    <%= javascript_importmap_tags "application" %> <!-- Loại bỏ từ khóa không hợp lệ -->
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

@@ -1,13 +1,13 @@
 <h1>Products</h1>
 
+<%= link_to "New product", new_product_path if authenticated? %>
+<%= link_to "Login", new_session_path unless authenticated? %>
+
+
 <div id="products">
-  <% if @products.present? %>  <!-- Kiểm tra @products có dữ liệu không -->
-    <% @products.each do |product| %>
-      <div>
-        <%= product.name %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>No products available.</p>  <!-- Thông báo nếu không có sản phẩm -->
+  <% @products.each do |product| %>
+    <div>
+      <%= link_to product.name, product %>
+    </div>
   <% end %>
 </div>
