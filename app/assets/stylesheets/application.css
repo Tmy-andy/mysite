@@ -1,18 +1,39 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>MyApp</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 1rem;
+}
 
-    <!-- Stylesheets -->
-    <%= stylesheet_link_tag "application" %>
-    <%= stylesheet_link_tag "custom" %> <!-- Không sử dụng data-turbo-track nếu không hỗ trợ -->
+nav {
+  justify-content: flex-end;
+  display: flex;
+  font-size: 0.875em;
+  gap: 0.5rem;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
-    <!-- JavaScript -->
-    <%= javascript_importmap_tags "application" %> <!-- Loại bỏ từ khóa không hợp lệ -->
-  </head>
-  <body>
-    <%= yield %>
-  </body>
-</html>
+nav a {
+  display: inline-block;
+}
+
+main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.notice {
+  color: green;
+}
+
+section.product {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+section.product img {
+  border-radius: 8px;
+  flex-basis: 50%;
+  max-width: 50%;
+}
