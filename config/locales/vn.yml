@@ -3,3 +3,5 @@ vn:
   products:
     index:
       title: "Sản phẩm"
+      T-shirt: "Áo thun"
+      Pants: "Quần dài"

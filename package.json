@@ -10,5 +10,17 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  },
+  "dependencies": {
+    "@rails/actiontext": "^8.0.100",
+    "autoprefixer": "^10.4.20",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "postcss": "^8.4.49",
+    "sass": "^1.83.1",
+    "trix": "^2.1.12"
+  }
 }
