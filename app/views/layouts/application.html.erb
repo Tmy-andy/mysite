@@ -26,9 +26,14 @@
   <body>
     <div class="notice"><%= notice %></div>
     <nav>
-      <%= link_to "Home", root_path %>
-      <%= button_to "Log out", session_path, method: :delete if authenticated? %>
-    </nav>
+    <%= link_to "Home", root_path %>
+    <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+  </nav>
+  <% if flash[:notice] %>
+    <p style="color: green;"><%= flash[:notice] %></p>
+  <% elsif flash[:alert] %>
+    <p style="color: red;"><%= flash[:alert] %></p>
+  <% end %>
 
     <main>
      <%= yield %>
