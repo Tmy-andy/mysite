@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
-  validates :email_address, presence: true, uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }  # Bạn có thể tùy chỉnh độ dài của mật khẩu
+  validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email" }
+  validates :password, presence: true, length: { minimum: 6 }
+
 end
