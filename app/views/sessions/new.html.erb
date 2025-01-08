@@ -1,11 +1,37 @@
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
-<%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign in" %>
+<h2>Sign in</h2>
+
+<%= form_with url: session_path, method: :post, local: true do |form| %>
+  <div>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+  </div>
+  <div>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
+  </div>
+  <div>
+    <%= form.submit "Sign in" %>
+  </div>
 <% end %>
+
 <br>
 
 <%= link_to "Forgot password?", new_password_path %>
+
+<h2>Or Register</h2>
+
+<%= form_with url: register_path, method: :post, local: true do |form| %>
+  <div>
+    <%= form.email_field :email_address, required: true, autofocus: true, placeholder: "Enter your email address" %><br>
+  </div>
+  <div>
+    <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter your password", maxlength: 72 %><br>
+  </div>
+  <div>
+    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password" %><br>
+  </div>
+  <div>
+    <%= form.submit "Register" %>
+  </div>
+<% end %>

@@ -8,16 +8,25 @@ class SessionsController < ApplicationController
       password:'overless30803',
       password_confirmation:'overless30803')
     end
+    @user = User.new
   end
 
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
-      start_new_session_for user
-      redirect_to after_authentication_url
+    if params[:password_confirmation] == params[:password]
+      user = User.new(email_address: params[:email_address], password: params[:password], password_confirmation: params[:password_confirmation])
+      
+      if user.save
+        start_new_session_for(user)
+        redirect_to after_authentication_url, notice: "Successfully registered and logged in!"
+      else
+        flash.now[:alert] = "Registration failed: #{user.errors.full_messages.join(', ')}"
+        render :new
+      end
     else
-      redirect_to new_session_path, alert: "Try another email address or password."
+      flash.now[:alert] = "Password confirmation does not match"
+      render :new
     end
-  end
+  end  
 
   def destroy
     terminate_session
