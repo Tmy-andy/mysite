@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "Tmy" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,23 +20,28 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <div class="notice"><%= notice %></div>
-    <nav>
-    <%= link_to "Home", root_path %>
-    <%= button_to "Log out", session_path, method: :delete if authenticated? %>
-  </nav>
-  <% if flash[:notice] %>
-    <p style="color: green;"><%= flash[:notice] %></p>
-  <% elsif flash[:alert] %>
-    <p style="color: red;"><%= flash[:alert] %></p>
-  <% end %>
+    <div>
+      <!-- Header và Navigation -->
+      <header class="header">
+        <nav class="nav-links">
+          <%= link_to "Home", root_path, class: 'logo' %>
+          <% if authenticated? %>
+            <%= link_to "New product", new_product_path %>
+            <%= link_to "Log out", session_path, method: :delete if authenticated? %>
+          <% else %>
+            <%= button_to "Login", new_session_path%>
+          <% end %>
+        </nav>
+      </header>
 
-    <main>
-     <%= yield %>
-    </main>
+      <!-- Nội dung chính của trang -->
+      <div class="main-content">
+        <%= yield %> <!-- Render nội dung của các trang -->
+      </div>
+    </div>
   </body>
 </html>
+

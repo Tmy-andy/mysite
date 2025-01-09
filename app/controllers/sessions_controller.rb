@@ -12,27 +12,23 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Lấy các tham số từ params[:user]
-    user_params = params.require(:user).permit(:email_address, :password, :password_confirmation)
-  
-    # Tạo mới đối tượng User
-    user = User.new(user_params)
-  
-    # Kiểm tra nếu người dùng lưu thành công
-    if user.save
-      start_new_session_for(user)
-      redirect_to after_authentication_url, notice: "Successfully registered and logged in!"
+    if user = User.authenticate_by(params.permit(:email_address, :password))
+      start_new_session_for user
+      redirect_to after_authentication_url
     else
-      flash.now[:alert] = "Registration failed: #{user.errors.full_messages.join(', ')}"
-      render :new
+      redirect_to new_session_path, alert: "Try another email address or password."
     end
   end
-  
 
   def destroy
     terminate_session
-    redirect_to new_session_path
+    redirect_to new_session_path, notice: "Logged out successfully."
+  end  
+
+  def terminate_session
+    reset_session # Xóa toàn bộ dữ liệu phiên
   end
+
   def register_form
     @user = User.new
   end

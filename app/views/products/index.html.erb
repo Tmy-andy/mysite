@@ -45,10 +45,17 @@
   </div>
 <% end %>
 
+<!-- Danh sách sản phẩm -->
 <div id="products">
   <% @products.each do |product| %>
     <div>
       <%= link_to product.name, product %>
     </div>
   <% end %>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  &copy; <%= Time.current.year %> Tmy. All Rights Reserved.
+</div>
 </div>

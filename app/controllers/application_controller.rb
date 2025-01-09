@@ -9,5 +9,9 @@ class ApplicationController < ActionController::Base
     locale = params[:locale] || I18n.default_locale
     I18n.with_locale(locale, &action)
   end
+  def terminate_session
+    reset_session # Xóa toàn bộ dữ liệu phiên
+  end
+  
   
 end
