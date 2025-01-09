@@ -1,8 +1,9 @@
 <h1><%= t ".title" %></h1>
 
 <% if authenticated? %>
-  <%= link_to "New product", new_product_path %>
-  <%= link_to "Logout", session_path, method: :delete %>
+  <%= link_to "New product", new_product_path, data: { turbo: false } %>
+  <%= link_to "Logout", session_path, method: :delete if authenticated? %>
+  
 <% else %>
   <%= link_to "Login", new_session_path %>
 

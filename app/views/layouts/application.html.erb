@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <title><%= content_for(:title) || "Tmy" %></title>
+    <title><%= content_for(:title) || "Tmy Store" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="turbo-visit-control" content="reload">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -23,25 +24,16 @@
   </head>
 
   <body>
-    <div>
-      <!-- Header và Navigation -->
-      <header class="header">
-        <nav class="nav-links">
-          <%= link_to "Home", root_path, class: 'logo' %>
-          <% if authenticated? %>
-            <%= link_to "New product", new_product_path %>
-            <%= link_to "Log out", session_path, method: :delete if authenticated? %>
-          <% else %>
-            <%= button_to "Login", new_session_path%>
-          <% end %>
-        </nav>
-      </header>
+     <div class="notice"><%= notice %></div>
+    <nav>
+    <div style="text-align: right;">
+    <%= link_to "Home", root_path, class: "home-button" %>
+  </div>
+      <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+    </nav>
 
-      <!-- Nội dung chính của trang -->
-      <div class="main-content">
-        <%= yield %> <!-- Render nội dung của các trang -->
-      </div>
-    </div>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>
-

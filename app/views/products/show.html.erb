@@ -1,19 +1,25 @@
-<p><%= link_to "Back", products_path %></p>
-
 <section class="product">
   <%= image_tag @product.featured_image if @product.featured_image.attached? %>
-
   <section class="product-info">
     <% cache @product do %>
-      <h1><%= @product.name %></h1>
-      <%= @product.description %>
+      <div class="product-name">
+        <h1><%= @product.name %></h1>
+      </div>
+      <div class="product-description">
+        <p><%= @product.description %></p>
+      </div>
     <% end %>
 
-    <%= render "inventory", product: @product %>
+    <div class="product-inventory">
+      <%= render "inventory", product: @product %>
+    </div>
 
-    <% if authenticated? %>
-      <%= link_to "Edit", edit_product_path(@product) %>
-      <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-    <% end %>
+    <div class="action-buttons">
+      <%= link_to "Back", products_path, class: "cancel-link" %>
+      <% if authenticated? %>
+        <%= link_to "Edit", edit_product_path(@product), class: "edit-link" %>
+        <%= button_to "Destroy", @product, method: :delete, class: "destroy-button", data: { turbo_confirm: "Are you sure?" } %>
+      <% end %>
+    </div>
   </section>
 </section>
