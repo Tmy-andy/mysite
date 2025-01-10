@@ -73,3 +73,4 @@ end
 gem 'bootstrap', '~> 5.3.0'
 
 gem 'mail'
+gem 'trix'
