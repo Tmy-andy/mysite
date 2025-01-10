@@ -1,62 +1,204 @@
-<h1><%= t ".title" %></h1>
-
-<% if authenticated? %>
-  <%= link_to "New product", new_product_path, data: { turbo: false } %>
-  <%= link_to "Logout", session_path, method: :delete if authenticated? %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= t ".title" %></title>
+  <%= csrf_meta_tags %>
   
-<% else %>
-  <%= link_to "Login", new_session_path %>
+  <!-- Stylesheets -->
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f7fa; /* Light pastel background */
+      margin: 0;
+      padding: 0;
+    }
 
-  <div id="login-form">
-    <h3>Login</h3>
-    <%= form_with url: session_path, method: :post, local: true do |form| %>
-      <div>
-        <%= form.label :email_address, "Email" %>
-        <%= form.email_field :email_address, required: true %>
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #6c5ce7;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #6c5ce7;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #a29bfe;
+    }
+
+    /* Forms */
+    form div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #6c5ce7;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #a29bfe;
+    }
+
+    /* Product List */
+    #products {
+      margin-top: 30px;
+    }
+
+    .product-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fafafa;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .product-card:hover {
+      transform: scale(1.02);
+    }
+
+    .product-card a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #6c5ce7;
+      font-size: 18px;
+    }
+
+    .product-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-top: 1px solid #ddd;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><%= t ".title" %></h1>
+    
+    <% if authenticated? %>
+      <%= link_to "New product", new_product_path, class: "btn" %>
+      <%= link_to "Logout", session_path, method: :delete, class: "btn" %>
+    <% else %>
+      <%= link_to "Login", new_session_path, class: "btn" %>
+      
+      <div id="login-form">
+        <h3>Login</h3>
+        <%= form_with url: session_path, method: :post, local: true do |form| %>
+          <div>
+            <%= form.label :email_address, "Email" %>
+            <%= form.email_field :email_address, required: true %>
+          </div>
+          <div>
+            <%= form.label :password, "Password" %>
+            <%= form.password_field :password, required: true %>
+          </div>
+          <div>
+            <%= form.submit "Login" %>
+          </div>
+        <% end %>
       </div>
-      <div>
-        <%= form.label :password, "Password" %>
-        <%= form.password_field :password, required: true %>
-      </div>
-      <div>
-        <%= form.submit "Login" %>
+      
+      <div id="register-form">
+        <h3>Register</h3>
+        <%= form_with url: register_path, method: :post, local: true do |form| %>
+          <div>
+            <%= form.label :email_address, "Email" %>
+            <%= form.email_field :email_address, required: true %>
+          </div>
+          <div>
+            <%= form.label :password, "Password" %>
+            <%= form.password_field :password, required: true %>
+          </div>
+          <div>
+            <%= form.label :password_confirmation, "Confirm Password" %>
+            <%= form.password_field :password_confirmation, required: true %>
+          </div>
+          <div>
+            <%= form.submit "Register" %>
+          </div>
+        <% end %>
       </div>
     <% end %>
-  </div>
-
-  <div id="register-form">
-    <h3>Register</h3>
-    <%= form_with url: register_path, method: :post, local: true do |form| %>
-      <div>
-        <%= form.label :email_address, "Email" %>
-        <%= form.email_field :email_address, required: true %>
-      </div>
-      <div>
-        <%= form.label :password, "Password" %>
-        <%= form.password_field :password, required: true %>
-      </div>
-      <div>
-        <%= form.label :password_confirmation, "Confirm Password" %>
-        <%= form.password_field :password_confirmation, required: true %>
-      </div>
-      <div>
-        <%= form.submit "Register" %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
-<!-- Danh sách sản phẩm -->
-<div id="products">
-  <% @products.each do |product| %>
-    <div>
-      <%= link_to product.name, product %>
+    
+    <!-- Products List -->
+    <div id="products">
+      <% @products.each do |product| %>
+        <div class="product-card">
+          <%= link_to product.name, product %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
-
-<!-- Footer -->
-<div class="footer">
-  &copy; <%= Time.current.year %> Tmy. All Rights Reserved.
-</div>
-</div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      &copy; <%= Time.current.year %> Tmy. All Rights Reserved.
+    </div>
+  </div>
+</body>
+</html>

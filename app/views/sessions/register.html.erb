@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff; /* Pastel blue background */
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff; /* White background */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #4CAF50; /* Pastel green */
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-size: 16px;
+        color: #666;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 8px;
+        background-color: #fafafa;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #4CAF50;
+        background-color: #fff;
+      }
+
+      .form-group button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .form-group button:hover {
+        background-color: #45a049;
+      }
+
+      .form-footer {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .form-footer a {
+        color: #4CAF50;
+        text-decoration: none;
+      }
+
+      .form-footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Register</h1>
+      <%= form_with model: @user, url: register_path, local: true do |form| %>
+        <div class="form-group">
+          <%= form.label :email_address, "Email" %>
+          <%= form.email_field :email_address, required: true, placeholder: "Enter your email" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :password, "Password" %>
+          <%= form.password_field :password, required: true, placeholder: "Enter your password" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :password_confirmation, "Confirm Password" %>
+          <%= form.password_field :password_confirmation, required: true, placeholder: "Confirm your password" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit "Register" %>
+        </div>
+      <% end %>
+
+      <div class="form-footer">
+        <p>Already have an account? <%= link_to "Login", new_session_path %></p>
+      </div>
+    </div>
+  </body>
+</html>

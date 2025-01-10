@@ -1,35 +1,54 @@
 class SessionsController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
-  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_url, alert: "Try again later." }
+  allow_unauthenticated_access only: [:new, :create, :register, :create_account]
 
+  # Hiển thị form đăng nhập
   def new
-    unless User.exists?(email_address:'tmy300803@gmail.com')
-      User.create!(email_address:'tmy300803@gmail.com',
-      password:'overless30803',
-      password_confirmation:'overless30803')
-    end
     @user = User.new
   end
 
+  # Đăng nhập
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
-      start_new_session_for user
-      redirect_to after_authentication_url
+    user = User.authenticate_by(params.require(:user).permit(:email_address, :password))
+  
+    if user
+      start_new_session_for(user)
+      redirect_to root_path, notice: "Đăng nhập thành công!"
     else
-      redirect_to new_session_path, alert: "Try another email address or password."
+      flash.now[:alert] = "Email hoặc mật khẩu không đúng."
+      render :new
+    end
+  end  
+
+  # Hiển thị form đăng ký
+  def register
+    @user = User.new
+  end
+
+  # Tạo tài khoản mới
+  def create_account
+    @user = User.new(user_params)
+    if @user.save
+      start_new_session_for(@user)
+      redirect_to products_path, notice: "Tài khoản được tạo thành công và bạn đã đăng nhập!"
+    else
+      flash.now[:alert] = "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin."
+      render :register
     end
   end
 
+  # Đăng xuất
   def destroy
     terminate_session
-    redirect_to new_session_path, notice: "Logged out successfully."
-  end  
+    redirect_to new_session_path, notice: "Đăng xuất thành công."
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:email_address, :password, :password_confirmation)
+  end
 
   def terminate_session
     reset_session # Xóa toàn bộ dữ liệu phiên
-  end
-
-  def register_form
-    @user = User.new
   end
 end

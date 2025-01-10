@@ -1,37 +1,110 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff; /* Pastel blue background */
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
 
-<h2>Sign in</h2>
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff; /* White background */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
-<%= form_with url: session_path, method: :post, local: true do |form| %>
-  <div>
-    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  </div>
-  <div>
-    <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  </div>
-  <div>
-    <%= form.submit "Sign in" %>
-  </div>
-<% end %>
+      h1 {
+        text-align: center;
+        color: #4CAF50; /* Pastel green */
+      }
 
-<br>
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-<%= link_to "Forgot password?", new_password_path %>
+      .form-group label {
+        font-size: 16px;
+        color: #666;
+      }
 
-<h2>Or Register</h2>
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 8px;
+        background-color: #fafafa;
+      }
 
-<%= form_with url: register_path, method: :post, local: true do |form| %>
-  <div>
-    <%= form.email_field :email_address, required: true, autofocus: true, placeholder: "Enter your email address" %><br>
-  </div>
-  <div>
-    <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  </div>
-  <div>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password" %><br>
-  </div>
-  <div>
-    <%= form.submit "Register" %>
-  </div>
-<% end %>
+      .form-group input:focus {
+        outline: none;
+        border-color: #4CAF50;
+        background-color: #fff;
+      }
+
+      .form-group button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .form-group button:hover {
+        background-color: #45a049;
+      }
+
+      .form-footer {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .form-footer a {
+        color: #4CAF50;
+        text-decoration: none;
+      }
+
+      .form-footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+      <%= form_with model: @user, url: session_path, local: true do |form| %>
+        <div class="form-group">
+          <%= form.label :email_address, "Email" %>
+          <%= form.email_field :email_address, required: true, placeholder: "Enter your email" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :password, "Password" %>
+          <%= form.password_field :password, required: true, placeholder: "Enter your password" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit "Login" %>
+        </div>
+      <% end %>
+
+      <div class="form-footer">
+        <p>Don't have an account? <%= link_to "Register", register_path %></p>
+      </div>
+    </div>
+  </body>
+</html>

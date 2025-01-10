@@ -1,5 +1,15 @@
 en:
-  hello: "Hello world"
+  hello: "Hello!!"
   products:
     index:
       title: "Products"
+      home: "Home"
+      login: "Login"
+      logout: "Logout"
+    buttons:
+      new product: "New product"
+      logout: "Logout"
+  navbar:
+    home: "Home"
+    login: "Login"
+    logout: "Logout"

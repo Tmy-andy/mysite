@@ -1,18 +1,17 @@
 Rails.application.routes.draw do
-  # Routes cho đăng ký người dùng
-  get "register", to: "registrations#new", as: :new_register
-  post "register", to: "registrations#create", as: :register
+  scope "(:locale)", locale: /en|vn/ do
+    # Routes cho session (login/logout)
+    resource :session, only: [:new, :create, :destroy]
 
-  # Routes cho session (login/logout)
-  resource :session, only: [:new, :create, :destroy]
+    # Trang đăng ký tài khoản
+    get "register", to: "sessions#register", as: :register
+    post "register", to: "sessions#create_account"
 
-  # Routes cho quản lý mật khẩu
-  resources :passwords, param: :token
-
-  # Routes khác
-  root "products#index"
-  resources :products do
-    resources :subscribers, only: [:create]
-    resource :unsubscribe, only: [:show]
+    # Routes khác
+    root "products#index"
+    resources :products do
+      resources :subscribers, only: [:create]
+      resource :unsubscribe, only: [:show]
+    end
   end
 end

@@ -7,4 +7,9 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "is not a valid email" }
   validates :password, presence: true, length: { minimum: 6 }
 
+  # Phương thức xác thực người dùng
+  def self.authenticate_by(credentials)
+    user = find_by(email_address: credentials[:email_address]&.strip&.downcase)
+    user if user&.authenticate(credentials[:password])
+  end
 end

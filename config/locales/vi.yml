@@ -1,0 +1,15 @@
+vn:
+  hello: "Tmy xin chào bạn!"
+  products:
+    index:
+      title: "Sản phẩm"
+      home: "Trang chủ"
+      login: "Đăng nhập"
+      logout: "Đăng xuất"
+  buttons:
+    new product: "Sản phẩm mới"
+    logout: "Đăng xuất"
+  navbar:
+    home: "Trang chủ"
+    login: "Đăng nhập"
+    logout: "Đăng xuất"

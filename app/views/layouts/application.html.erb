@@ -1,36 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Tmy Store" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="turbo-visit-control" content="reload">
+    <title><%= content_for(:title) || "Tmy Store" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <!-- Includes all stylesheet files in app/assets/stylesheets -->
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+
+    <style>
+      /* Tổng thể giao diện */
+      body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fb; /* Pastel light blue */
+        color: #333;
+      }
+
+      .notice {
+        background-color: #f9ed69; /* Pastel yellow */
+        color: #333;
+        text-align: center;
+        padding: 15px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      /* Navigation */
+      nav {
+        background-color: #ffffff;
+        padding: 15px 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav a, nav button {
+        font-size: 16px;
+        color: #6c5ce7; /* Pastel purple */
+        text-decoration: none;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      nav a:hover, nav button:hover {
+        color: #a29bfe;
+      }
+
+      /* Main Content */
+      main {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 28px;
+        color: #6c5ce7;
+        margin-bottom: 20px;
+      }
+
+      /* Form */
+      form div {
+        margin-bottom: 15px;
+      }
+
+      label {
+        font-size: 14px;
+        color: #555;
+      }
+
+      input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 5px;
+      }
+
+      input[type="submit"] {
+        background-color: #6c5ce7; /* Pastel purple */
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #a29bfe;
+      }
+
+      .auth-info {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 20px;
+      }
+
+      .auth-info a {
+        color: #6c5ce7;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .auth-info a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
 
   <body>
-     <div class="notice"><%= notice %></div>
+    <div class="notice"><%= notice %></div>
+
     <nav>
-    <div style="text-align: right;">
-    <%= link_to "Home", root_path, class: "home-button" %>
-  </div>
-      <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+      <div class="left-links">
+        <%= link_to t("navbar.home"), root_path %>
+        <% if session[:user_id] %>
+          <%= button_to t("navbar.logout"), session_path, method: :delete %>
+        <% end %>
+      </div>
+      <div class="right-links">
+        <% I18n.available_locales.each do |locale| %>
+          <% if locale != I18n.locale %>
+            <%= link_to locale.to_s.upcase, url_for(locale: locale), class: "language-switch" %>
+          <% end %>
+        <% end %>
+      </div>
     </nav>
+
+
+    <% if session[:user_id] %>
+      <p class="auth-info">
+        Logged in as: <%= User.find(session[:user_id]).email_address %>
+        <%= link_to "Logout", session_path, method: :delete %>
+      </p>
+    <% end %>
 
     <main>
       <%= yield %>
