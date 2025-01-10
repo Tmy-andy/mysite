@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope "(:locale)", locale: /en|vn/ do
+  scope "(:locale)", locale: /en|vi/ do
     # Routes cho session (login/logout)
     resource :session, only: [:new, :create, :destroy]
 

@@ -86,7 +86,7 @@
   <body>
     <div class="container">
       <h1>Login</h1>
-      <%= form_with model: @user, url: session_path, local: true do |form| %>
+      <%= form_with model: @user, url: session_path(locale: I18n.locale), local: true do |form| %>
         <div class="form-group">
           <%= form.label :email_address, "Email" %>
           <%= form.email_field :email_address, required: true, placeholder: "Enter your email" %>
@@ -103,7 +103,7 @@
       <% end %>
 
       <div class="form-footer">
-        <p>Don't have an account? <%= link_to "Register", register_path %></p>
+        <p>Don't have an account? <%= link_to "Register", register_path(locale: I18n.locale) %></p>
       </div>
     </div>
   </body>
