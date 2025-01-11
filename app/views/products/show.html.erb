@@ -100,8 +100,12 @@
     <!-- Featured Image -->
     <div class="product-image">
       <!-- Hiển thị hình ảnh sản phẩm -->
-      <img src="<%= @product.featured_image.attached? ? url_for(@product.featured_image.variant(resize_to_fill: [300, 300])) : '' %>" 
-           alt="<%= @product.name %>" />
+      <% if @product.featured_image.attached? %>
+  <%= image_tag @product.featured_image, alt: @product.name %>
+<% else %>
+  <p>No image available</p>
+<% end %>
+
     </div>
 
     <!-- Product Information -->
